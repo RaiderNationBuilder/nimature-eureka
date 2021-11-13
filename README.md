@@ -31,3 +31,6 @@ Patrick Sebstead
 github username: RaiderNationBuilder
 
 If you have any questions about this project you can reach me at the following email address: sebstead@yahoo.com
+
+githuyb repo:  https://github.com/RaiderNationBuilder/nimature-eureka
+heroku deployment:   https://n-ote-taker.herokuapp.com/

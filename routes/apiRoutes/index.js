@@ -4,18 +4,12 @@ const router = require('express').Router();
 
 router.get('/api/notes', (req, res) => {
     fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
-        console.log('__dirman', __dirname)
-        //fs.readFile( "./../../db/db.json", "utf8", function(err, data){
-        console.log(err, data)
         res.json(JSON.parse(data))
     });
 });
 
 router.post('/api/notes', (req, res) => {
-    console.log('req.body', req.body)
     fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
-        console.log('__dirman', __dirname)
-        console.log(err, data)
         var parsed = JSON.parse(data)
         req.body.id = parsed.length + 1
         parsed.push(req.body)
@@ -26,9 +20,9 @@ router.post('/api/notes', (req, res) => {
 });
 
 router.delete('/api/notes/:id', (req, res) => {
-    console.log('req.oarams', req.params)
-    fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
-        var filtered = data.filter((note) => { note.id != req.params.id })
+    fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {        
+        var filtered = JSON.parse(data).filter((note) => note.id != req.params.id)
+        console.log(JSON.stringify({filtered}, null, 2))
         fs.writeFile(path.join(__dirname + "./../../db/db.json"), JSON.stringify(filtered), function (err, data) {
             res.json(filtered)
         })

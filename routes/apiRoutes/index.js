@@ -14,7 +14,7 @@ router.get('/api/notes', (req, res) => {
 router.post('/api/notes', (req, res) => {
     console.log('req.body', req.body)
     fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
-        console.log('__dirman', __dirname)        
+        console.log('__dirman', __dirname)
         console.log(err, data)
         var parsed = JSON.parse(data)
         req.body.id = parsed.length + 1
@@ -27,13 +27,19 @@ router.post('/api/notes', (req, res) => {
 
 router.delete('/api/notes/:id', (req, res) => {
     console.log('req.oarams', req.params)
+    fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
+        var filtered = data.filter((note) => { note.id != req.params.id })
+        fs.writeFile(path.join(__dirname + "./../../db/db.json"), JSON.stringify(filtered), function (err, data) {
+            res.json(filtered)
+        })
+    })
 })
 
 
 // have a delte route
-    // read the db json file again fs.Readfile
-        // have empty array var newNotes = []
-        // do a for loop and inside for loop have an if statment checking the ids!
-        //var filtered = data.filter((note) =>  note.id != req.params.id)
+// read the db json file again fs.Readfile
+// have empty array var newNotes = []
+// do a for loop and inside for loop have an if statment checking the ids!
+//var filtered = data.filter((note) =>  note.id != req.params.id)
 
 module.exports = router;

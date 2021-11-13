@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const router = require('express').Router();
+const {v4:uuidv4} = require("uuid")
 
 router.get('/api/notes', (req, res) => {
     fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
@@ -11,7 +12,7 @@ router.get('/api/notes', (req, res) => {
 router.post('/api/notes', (req, res) => {
     fs.readFile(path.join(__dirname + "./../../db/db.json"), "utf8", function (err, data) {
         var parsed = JSON.parse(data)
-        req.body.id = parsed.length + 1
+        req.body.id = uuidv4()
         parsed.push(req.body)
         fs.writeFile(path.join(__dirname + "./../../db/db.json"), JSON.stringify(parsed), function (err, data) {
             res.json(parsed)
